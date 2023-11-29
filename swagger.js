@@ -11,11 +11,11 @@ const doc = {
         url: "https://spdx.org/licenses/MIT.html",
       },
   },
-  host: `localhost:${process.env.PORT}`,
+  host: `${process.env.HOSTNAME || "localhost" }:${process.env.PORT}`,
   basePath: "/",
   servers: [
     {
-      url: `http://localhost:${process.env.PORT}`,
+      url: `http://${process.env.HOSTNAME || "localhost" }:${process.env.PORT}`,
     },
   ],
   schemes: ['http', 'https'],
