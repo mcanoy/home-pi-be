@@ -9,6 +9,14 @@ const port = process.env.PORT || 8181;
 
 app.use(express.json());
 
+const UseCORS  = /^true$/i.test(process.env.CORS);
+
+UseCORS && app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 router.use('/api/google',require("./routes/googleRoute"));
 router.use('/api/nhl',require("./routes/nhlRoute"));
 router.use('/api/birthday',require("./routes/birthdayRoute"));
