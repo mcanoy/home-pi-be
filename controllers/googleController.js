@@ -42,7 +42,7 @@ const translate = (req, res) => {
 }
 
 
-const getCurrentTime = () => {
+const getCurrentTime = (req, res) => {
   const time = moment();
 
   if(time.minutes() == 0) {
@@ -55,6 +55,10 @@ const getCurrentTime = () => {
   }
 
   say(talk);
+
+  if(res) {
+    res.status(200).json({ time: talk });
+  }
 }
 
 module.exports = { speak, translate, say, getCurrentTime }
