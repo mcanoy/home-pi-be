@@ -17,14 +17,15 @@ const getNextBirthday = (req, res) => {
 function getNextBirthdays() {
   console.log("next birthdays");
     bdays = content.getBirthdays();
+    now = moment().startOf('day');
     bdays.forEach(function(birthday) {
       var nextBirthday = moment(birthday.date);
-      nextBirthday.year(moment().year());
+      nextBirthday.year(now.year());
 
-      daysDiff = nextBirthday.diff(moment(), 'days');
+      daysDiff = nextBirthday.diff(now, 'days');
       if(daysDiff < 0) { //this year's birthday has passed. Check next year
         nextBirthday.year(nextBirthday.year()+1);
-        daysDiff = nextBirthday.diff(moment(), 'days');
+        daysDiff = nextBirthday.diff(now, 'days');
       }
 
       if(daysDiff == 0) {
