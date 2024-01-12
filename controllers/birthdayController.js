@@ -15,6 +15,7 @@ const getNextBirthday = (req, res) => {
 }
 
 function getNextBirthdays() {
+  console.log("next birthdays");
     bdays = content.getBirthdays();
     bdays.forEach(function(birthday) {
       var nextBirthday = moment(birthday.date);
@@ -37,4 +38,4 @@ function getNextBirthdays() {
     });
 }
 
-module.exports = { getAllBirthdays, getNextBirthday }
+module.exports = { getAllBirthdays, getNextBirthday, getNextBirthdays }

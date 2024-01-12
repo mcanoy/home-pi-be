@@ -13,7 +13,7 @@ A waste of time backend api server for the front end Vue.js ap.
 | /api/nhl/leafs | Says when the next Leaf game is |
 | /api/nhl/raptors | Says when the next Raptor game is |
 | /api/birthday | A list of birthdays |
-| /api/birthday | Says the next set of birthdays coming up if soon |
+| /api/birthday/next | Says the next set of birthdays coming up if soon |
 | /api/content/quotes | All quotes |
 | /api/content.quotes/random | Says a random quote |
 
