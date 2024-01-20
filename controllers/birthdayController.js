@@ -10,14 +10,16 @@ const getAllBirthdays = (req, res) => {
 
 //Broadcasts a birthday message if within a person's set range or today or tomorrow
 const getNextBirthday = (req, res) => {
-  getNextBirthdays();
-  res.status(200).json({ messsage: "ok"});
+  message = getNextBirthdays();
+  res.status(200).json({ messsage: message});
 }
 
 function getNextBirthdays() {
   console.log("next birthdays");
     bdays = content.getBirthdays();
     now = moment().startOf('day');
+
+    var message = "Calendar is empty";
     bdays.forEach(function(birthday) {
       var nextBirthday = moment(birthday.date);
       nextBirthday.year(now.year());
@@ -29,14 +31,18 @@ function getNextBirthdays() {
       }
 
       if(daysDiff == 0) {
-        talker.say(`Happy Birthday ${birthday.person}`);
+        message = `Happy Birthday ${birthday.person}`
+        talker.say(message);
       } else if (daysDiff == 1) {
-        talker.say(`It's ${birthday.person}'s birthday tomorrow`);
+        message = `It's ${birthday.person}'s birthday tomorrow`
+        talker.say(message);
       } else if(daysDiff < birthday.notifyDays) {
-        nextBirthdayMessage = 
-        talker.say(`${birthday.person} has a birthday in ${daysDiff} days`);
+        message = `${birthday.person} has a birthday in ${daysDiff} days`
+        talker.say(message);
       }
     });
+
+    return message;
 }
 
 module.exports = { getAllBirthdays, getNextBirthday, getNextBirthdays }
