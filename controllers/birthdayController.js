@@ -1,6 +1,9 @@
 const content = require('./contentController');
 const talker = require('./googleController');
 const moment = require('moment');
+const axios = require('axios');
+
+const birthdayHook = process.env.MESSAGE_WEBHOOK_URL;
 
 const getAllBirthdays = (req, res) => {
   console.log(content.getBirthdays());
@@ -19,7 +22,8 @@ function getNextBirthdays() {
     bdays = content.getBirthdays();
     now = moment().startOf('day');
 
-    var message = "Calendar is empty";
+    var message = "";
+    var atLeastOneMessage = false;
     bdays.forEach(function(birthday) {
       var nextBirthday = moment(birthday.date);
       nextBirthday.year(now.year());
@@ -31,18 +35,42 @@ function getNextBirthdays() {
       }
 
       if(daysDiff == 0) {
-        message = `Happy Birthday ${birthday.person}`
-        talker.say(message);
+        message = atLeastOneMessage ? `${message} and ` : ""
+        message +=  `Happy Birthday ${birthday.person} `
+        atLeastOneMessage = true
       } else if (daysDiff == 1) {
-        message = `It's ${birthday.person}'s birthday tomorrow`
-        talker.say(message);
+        message = atLeastOneMessage ? `${message} and ` : ""
+        message += `It's ${birthday.person}'s birthday tomorrow `
+        atLeastOneMessage = true
       } else if(daysDiff < birthday.notifyDays) {
-        message = `${birthday.person} has a birthday in ${daysDiff} days`
-        talker.say(message);
+        message = atLeastOneMessage ? `${message} and ` : ""
+        message += `${birthday.person} has a birthday in ${daysDiff} days `
+        atLeastOneMessage = true
       }
     });
 
+    if(message.length > 0) {
+      talker.say(message);
+      sendWebhook(message);
+    }
+
+    console.log(message);
     return message;
+}
+
+function sendWebhook(message) {
+  console.warn(`birthday hook ${birthdayHook}`)
+  axios.post(birthdayHook, {
+    message: message,
+    title: "Birthday!"
+  })
+    .then(function (response) {
+      console.warn(`message sent to webhook ${message}`)
+    })
+    .catch(function (error) {
+      console.warn(`failed to send message ${message}`)
+      console.error(error.errors);
+    });
 }
 
 module.exports = { getAllBirthdays, getNextBirthday, getNextBirthdays }

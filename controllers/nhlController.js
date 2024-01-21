@@ -4,6 +4,8 @@ const talker = require('./googleController');
 
 const leafUrl = "https://api-web.nhle.com/v1/scoreboard/tor/now";
 const raptorId = "Toronto Raptors";
+const leafHook = process.env.MESSAGE_WEBHOOK_URL;
+const raptorHook = process.env.MESSAGE_WEBHOOK_URL;
 
 //@desc get next leaf game
 //@route GET /api/nextgame
@@ -19,6 +21,7 @@ const getNextLeafsGame = (req, res) => {
         if(nextgame.gameState != "OFF") {
           jsonText = nextGameDetails(nextgame);
           talker.say(jsonText);
+          sendWebhook(leafHook, jsonText, "Go Leafs Go")
           break;
         }
       }
@@ -85,6 +88,7 @@ const getNextRaptorGame = (req, res) => {
         var nextgame = response.data[games];
         if(!nextgame.HomeTeamScore) {
           jsonText = getNextRaptorGameDetails(nextgame);
+          sendWebhook(raptorHook, jsonText, "Let's Go Raptors");
           talker.say(jsonText);
           break;
         }
@@ -118,6 +122,21 @@ function getNextRaptorGameDetails(game) {
   }
 
   return nextGameText;
+}
+
+function sendWebhook(hook, message, title) {
+  console.warn(`game hook ${hook}`)
+  axios.post(hook, {
+    message: message,
+    title: title
+  })
+    .then(function (response) {
+      console.warn(`message sent to webhook ${message}`)
+    })
+    .catch(function (error) {
+      console.warn(`failed to send message ${message}`)
+      console.error(error.errors);
+    });
 }
 
 
