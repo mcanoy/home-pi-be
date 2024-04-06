@@ -21,6 +21,7 @@ router.use('/api/google',require("./routes/googleRoute"));
 router.use('/api/nhl',require("./routes/nhlRoute"));
 router.use('/api/birthday',require("./routes/birthdayRoute"));
 router.use('/api/content', require("./routes/contentRoute"));
+router.use('/api/toluca', require("./routes/tolucaRoute"));
 
 scheduler.doit();
 app.use(router);
