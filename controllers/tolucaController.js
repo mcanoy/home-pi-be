@@ -47,10 +47,10 @@ const getStandings = (req, res) => {
           $(this).find("td").each(function (i, e) {
             if(i == 2) {
               jso[scheduleFields[i]] = $(this).text().trim().split(')')[0] + ')';
-              jso.homeScore = $(this).text().trim().split(')')[1].trim();
+              jso.homeScore = getScore($(this));
             } else if(i == 3) {
               jso[scheduleFields[i]] = $(this).text().trim().split(')')[0] + ')';
-              jso.awayScore = $(this).text().trim().split(')')[1].trim();
+              jso.awayScore = getScore($(this));
             } else {
               jso[scheduleFields[i]] = $(this).text().trim()
             }
@@ -71,6 +71,14 @@ const getStandings = (req, res) => {
     });
 
     
+}
+
+function getScore(scoreline) {
+  const splitter =  scoreline.text().trim().split(')');
+  if(splitter.length > 0 && splitter[1]) {
+    return splitter[1].trim();
+  }
+  return "";
 }
 
 
