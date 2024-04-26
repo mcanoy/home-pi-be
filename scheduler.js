@@ -13,6 +13,11 @@ const doit = () => {
     nhlController.getNextRaptorGame();
   });  
 
+  console.log("Scheduling Blue Jays");
+  schedule.scheduleJob('10 12-18/4 * * *', function() {
+    nhlController.getNextBlueJayGame()
+  });
+
   console.log("Scheduling Birthdays");
   schedule.scheduleJob('45 7 * * *', function() {
     getNextBirthdays();
