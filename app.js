@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
+const dataloader = require('./utils/dataload');
 const swaggerFile = require('./swagger-output.json');
 const swaggerUi = require("swagger-ui-express");
 const scheduler = require("./scheduler");
@@ -22,6 +23,7 @@ router.use('/api/nhl',require("./routes/nhlRoute"));
 router.use('/api/birthday',require("./routes/birthdayRoute"));
 router.use('/api/content', require("./routes/contentRoute"));
 router.use('/api/toluca', require("./routes/tolucaRoute"));
+router.use('/api/baseball', require("./routes/baseballRoute"));
 
 scheduler.doit();
 app.use(router);
@@ -31,6 +33,8 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerFile)
 );
+
+dataloader.loadFromSheets();
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -108,6 +108,19 @@
         }
       }
     },
+    "/api/nhl/next/jays": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/birthday/": {
       "get": {
         "description": "",
@@ -141,6 +154,160 @@
     "/api/content/quotes/random": {
       "get": {
         "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/toluca/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "league",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/toluca/standings": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "league",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/baseball/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/baseball/team": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/baseball/hitter/{hitter}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "hitter",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/baseball/season/{season}/division/{division}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "season",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "division",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/baseball/seasons": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/baseball/career/{player}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "player",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/baseballgame/{gamedate}/division/{division}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "gamedate",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "division",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
