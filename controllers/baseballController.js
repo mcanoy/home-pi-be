@@ -63,7 +63,10 @@ function sort(seasons) {
     const ayear = Number(a.season.substring(1));
     const byear = Number(b.season.substring(1));
 
-    return byear - ayear == 0 ? b.season.localeCompare(a.season) : byear - ayear;
+    const aseason = a.season.replace("F", "Z");
+    const bseason = b.season.replace("F", "Z");
+
+    return byear - ayear == 0 ? bseason.localeCompare(aseason) : byear - ayear;
   });
 }
 
