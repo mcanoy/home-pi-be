@@ -22,8 +22,10 @@ const getNextLeafsGame = (req, res) => {
         var nextgame = response.data.gamesByDate[games].games[0];
         if(nextgame.gameState != "OFF") {
           jsonText = nextGameDetails(nextgame);
-          talker.say(jsonText);
-          sendWebhook(leafHook, jsonText, "Go Leafs Go")
+          if(jsonText) {
+            talker.say(jsonText);
+            sendWebhook(leafHook, jsonText, "Go Leafs Go")
+          }
           break;
         }
       }
@@ -52,12 +54,11 @@ function nextGameDetails(game) {
     const gameTime = moment(game.startTimeUTC);
     const opponent = getOpponent(game);
     nextGameText = `The next Leafs game is today at ${gameTime.format('h:mma')} against the ${opponent} ${broadcast}`
-    
-  } else {
+  } else if(gameDate.startOf('day').diff(moment().startOf('day'), 'days')  < 7) { // only if the next game is within a week.
     nextGameText =`The next Leafs game is on ${gameDate.format('dddd')} ${broadcast}`;
   }
 
-  console.log(nextGameText);
+  console.log(nextGameText ? nextGameText : "No Leafs game scheduled or next is more than a week");
   return nextGameText;
 }
 
@@ -158,6 +159,12 @@ const getNextBlueJayGame = (req, res) => {
     });
 }
 
+/**
+ * Sends a message to home assistant that will notify via ios
+ * @param {*} hook 
+ * @param {*} message 
+ * @param {*} title 
+ */
 function sendWebhook(hook, message, title) {
   console.warn(`game hook ${hook}`)
   axios.post(hook, {
