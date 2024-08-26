@@ -91,8 +91,10 @@ const getNextRaptorGame = (req, res) => {
         var nextgame = response.data[games];
         if(!nextgame.HomeTeamScore) {
           jsonText = getNextRaptorGameDetails(nextgame);
-          sendWebhook(raptorHook, jsonText, "Let's Go Raptors");
-          talker.say(jsonText);
+          if(jsonText) {
+            sendWebhook(raptorHook, jsonText, "Let's Go Raptors");
+            talker.say(jsonText);
+          }
           break;
         }
       }
@@ -114,10 +116,13 @@ function getNextRaptorGameDetails(game) {
   const now = moment.now();
   const opponent = (raptorId === game.HomeTeam) ? game.AwayTeam : game.HomeTeam;
   var nextGameText;
+  const netGameDayCount = gameDate.startOf('day').diff(moment().startOf('day'), 'days');
 
   if(gameDate.isSame(now, 'day')) { // Today
     nextGameText = `The next Raptors game is today at ${gameDate.format('h:mma')} against the ${opponent}`;
-  } else if(gameDate.startOf('day').diff(moment().startOf('day'), 'days')  > 7) {
+  } else if(netGameDayCount > 14) {
+    console.log(`The next Raptor game is in ${netGameDayCount} days`);
+  } else if(netGameDayCount  > 7) {
     //More than a week away
     nextGameText = `The next Raptors game is on ${gameDate.format('MMMM Do')}`;
   } else {
