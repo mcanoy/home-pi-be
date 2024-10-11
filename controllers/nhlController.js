@@ -20,7 +20,7 @@ const getNextLeafsGame = (req, res) => {
 
       for(games in response.data.gamesByDate) {
         var nextgame = response.data.gamesByDate[games].games[0];
-        if(nextgame.gameState != "OFF") {
+        if(nextgame.gameState == "FUT") {
           jsonText = nextGameDetails(nextgame);
           if(jsonText) {
             talker.say(jsonText);
@@ -147,7 +147,7 @@ const getNextBlueJayGame = (req, res) => {
         const gametime = moment(new Date(response.data.dates[0].games[0].gameDate)).format('h:mma');
         jsonText = `The ${away} play the ${home} today at ${gametime}`;
         talker.say(jsonText);
-      } else {
+      } else if (moment().month() > 2 && moment().month() < 9) { // Only blast this Apr - Sept
         jsonText = "No Blue Jay game today";
         talker.say(jsonText);
       }
