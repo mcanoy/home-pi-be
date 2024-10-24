@@ -20,7 +20,7 @@ const getNextLeafsGame = (req, res) => {
 
       for(games in response.data.gamesByDate) {
         var nextgame = response.data.gamesByDate[games].games[0];
-        if(nextgame.gameState == "FUT") {
+        if(nextgame.gameState == "FUT" || nextgame.gameState == "PRE") {
           jsonText = nextGameDetails(nextgame);
           if(jsonText) {
             talker.say(jsonText);
