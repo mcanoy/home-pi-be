@@ -2,6 +2,7 @@ const hitsy = require('../models/Hitting');
 const rollupHitsy = require('../models/SeasonHitting');
 const rollupTeamHitsy = require('../models/TeamHitting');
 const rollupGameHitsy = require('../models/GameHitting');
+const dataloader = require('../utils/dataload');
 
 async function getHitting(req, res) {
   const hitter = req.params.hitter;
@@ -95,4 +96,9 @@ async function getTeamHitting(req, res) {
   }
 }
 
-module.exports = { getHitting, getSeasonHitting, getTeamHitting, getAllSeasonHitting, getPlayerCareerHitting, getGameHitting }
+async function reloadStats(req, res) {
+  dataloader.loadFromSheets();
+  res.status(200).contentType('application/json').json("{\"message\": \"reloading\"}");
+}
+
+module.exports = { reloadStats, getHitting, getSeasonHitting, getTeamHitting, getAllSeasonHitting, getPlayerCareerHitting, getGameHitting }
