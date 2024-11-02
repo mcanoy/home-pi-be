@@ -1,1 +1,1 @@
-ssh mcanoy@home-pi.local 'bash -s' < deploy_script.sh
+ssh $1 'bash -s' < deploy_script.sh

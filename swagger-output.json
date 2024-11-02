@@ -291,7 +291,7 @@
         }
       }
     },
-    "/api/baseballgame/{gamedate}/division/{division}": {
+    "/api/baseball/game/{gamedate}/division/{division}": {
       "get": {
         "description": "",
         "parameters": [
@@ -311,6 +311,19 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/baseball/reload": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }

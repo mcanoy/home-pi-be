@@ -116,8 +116,7 @@ function getNextRaptorGameDetails(game) {
   const now = moment.now();
   const opponent = (raptorId === game.HomeTeam) ? game.AwayTeam : game.HomeTeam;
   var nextGameText;
-  const netGameDayCount = gameDate.startOf('day').diff(moment().startOf('day'), 'days');
-
+  const netGameDayCount = moment(game.DateUtc).startOf('day').diff(moment().startOf('day'), 'days');
   if(gameDate.isSame(now, 'day')) { // Today
     nextGameText = `The next Raptors game is today at ${gameDate.format('h:mma')} against the ${opponent}`;
   } else if(netGameDayCount > 14) {
