@@ -2,3 +2,4 @@
 .env
 content.json
 utils/*.sqlite
+.chow
