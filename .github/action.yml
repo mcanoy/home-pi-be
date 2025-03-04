@@ -1,0 +1,18 @@
+name: Evaluate LaunchDarkly flags
+on: push
+jobs:
+  eval-flags:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Evaluate flags
+        id: ld
+        uses: launchdarkly/gha-flags@v1.0.1
+        with:
+          sdk-key: ${{ secrets.LD_CODE_REFERENCES }}
+          flags: test-boolean-flag,false
+      - name: If true
+        if: fromJSON(steps.ld.outputs.test-boolean-flag) == true
+        run: echo "It's true"
+      - name: If false
+        if: fromJSON(steps.ld.outputs.test-boolean-flag) == false
+        run: echo "It's false"
